@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    tools:context=".LoginUser">
+
+    <ImageButton
+        android:id="@+id/imageButton_fire"
+        android:layout_width="147dp"
+        android:layout_height="126dp"
+        android:layout_marginStart="42dp"
+        android:layout_marginTop="203dp"
+        android:layout_marginEnd="222dp"
+        android:layout_marginBottom="402dp"
+        android:background="@drawable/round_buttons"
+        android:contentDescription="fire"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/fire" />
+
+    <ImageButton
+        android:id="@+id/imageButton_earthquake"
+        android:layout_width="147dp"
+        android:layout_height="126dp"
+        android:layout_marginStart="216dp"
+        android:layout_marginTop="203dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginBottom="402dp"
+        android:background="@drawable/round_buttons"
+        android:contentDescription="earthquake"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/earthquake" />
+
+    <ImageButton
+        android:id="@+id/imageButton_flood"
+        android:layout_width="147dp"
+        android:layout_height="126dp"
+        android:layout_marginStart="42dp"
+        android:layout_marginTop="378dp"
+        android:layout_marginEnd="222dp"
+        android:layout_marginBottom="227dp"
+        android:background="@drawable/round_buttons"
+        android:contentDescription="flood"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/flood" />
+
+    <ImageButton
+        android:id="@+id/imageButton_other"
+        android:layout_width="147dp"
+        android:layout_height="126dp"
+        android:layout_marginStart="216dp"
+        android:layout_marginTop="378dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginBottom="227dp"
+        android:background="@drawable/round_buttons"
+        android:contentDescription="other"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/question_mark" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="136dp"
+        android:layout_marginTop="84dp"
+        android:layout_marginEnd="134dp"
+        android:layout_marginBottom="602dp"
+        android:text="@string/welcome"
+        android:textColor="@color/white"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="42dp"
+        android:layout_marginTop="162dp"
+        android:layout_marginEnd="225dp"
+        android:layout_marginBottom="547dp"
+        android:text="@string/choose_the_incident"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_fire"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="103dp"
+        android:layout_marginTop="337dp"
+        android:layout_marginEnd="282dp"
+        android:layout_marginBottom="372dp"
+        android:text="@string/fire"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_earthquake"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="256dp"
+        android:layout_marginTop="337dp"
+        android:layout_marginEnd="74dp"
+        android:layout_marginBottom="372dp"
+        android:text="@string/earthquake"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_flood"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="96dp"
+        android:layout_marginTop="519dp"
+        android:layout_marginEnd="275dp"
+        android:layout_marginBottom="190dp"
+        android:text="@string/flood"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_question"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="239dp"
+        android:layout_marginTop="519dp"
+        android:layout_marginEnd="62dp"
+        android:layout_marginBottom="190dp"
+        android:text="@string/something_else"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="68dp"
+        android:layout_height="61dp"
+        android:layout_marginStart="42dp"
+        android:layout_marginTop="620dp"
+        android:layout_marginEnd="301dp"
+        android:layout_marginBottom="50dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="back"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/arrow_back" />
+
+    <Button
+        android:id="@+id/button_messagesLast"
+        android:layout_width="117dp"
+        android:layout_height="53dp"
+        android:layout_marginStart="246dp"
+        android:layout_marginTop="621dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginBottom="57dp"
+        android:text="@string/messages"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button_statistics"
+        android:layout_width="126dp"
+        android:layout_height="54dp"
+        android:layout_marginStart="246dp"
+        android:layout_marginTop="557dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginBottom="121dp"
+        android:text="@string/statistics"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "654352262956",
+    "firebase_url": "https://smart-alert-ddf2f-default-rtdb.firebaseio.com",
+    "project_id": "smart-alert-ddf2f",
+    "storage_bucket": "smart-alert-ddf2f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:654352262956:android:69396a8902fe11a2ba2e89",
+        "android_client_info": {
+          "package_name": "com.example.smart_alert"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARkdHuCGPWh46dNSLxqRJa9kkEDY5E0u8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

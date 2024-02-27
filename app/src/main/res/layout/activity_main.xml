@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/blue"
+    tools:context=".MainMenu">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/smart_alert"
+        android:textColor="@color/white"
+        android:textSize="48sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.182" />
+
+    <EditText
+        android:id="@+id/editTextTextEmailAddress"
+        android:layout_width="280dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="55dp"
+        android:layout_marginTop="325dp"
+        android:layout_marginEnd="73dp"
+        android:layout_marginBottom="347dp"
+        android:background="@drawable/round_fields"
+        android:ems="10"
+        android:hint="@string/e_mail"
+        android:drawableStart="@drawable/baseline_account_circle_24"
+        android:drawablePadding="5dp"
+        android:inputType="textEmailAddress"
+        android:paddingStart="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextTextPassword"
+        android:layout_width="280dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="57dp"
+        android:layout_marginTop="403dp"
+        android:layout_marginEnd="74dp"
+        android:layout_marginBottom="273dp"
+        android:background="@drawable/round_fields"
+        android:ems="10"
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        android:paddingStart="10dp"
+        android:drawableStart="@drawable/baseline_visibility_off_24"
+        android:drawablePadding="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button_login"
+        android:layout_width="144dp"
+        android:layout_height="57dp"
+        android:layout_marginStart="129dp"
+        android:layout_marginTop="492dp"
+        android:layout_marginEnd="138dp"
+        android:layout_marginBottom="182dp"
+        android:text="@string/log_in"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/round_buttons"/>
+
+    <Button
+        android:id="@+id/button_sign_up"
+        android:layout_width="144dp"
+        android:layout_height="57dp"
+        android:layout_marginStart="129dp"
+        android:layout_marginTop="558dp"
+        android:layout_marginEnd="138dp"
+        android:layout_marginBottom="116dp"
+        android:text="@string/sign_up"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/round_buttons"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
