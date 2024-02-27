@@ -3,14 +3,19 @@ package com.example.smart_alert;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.google.android.gms.location.LocationServices;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -23,6 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class LoginUser extends AppCompatActivity {
 
+    private static final int REQUEST_CODE_LOCATION_PERMISSION = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,35 +40,55 @@ public class LoginUser extends AppCompatActivity {
         Button messages = findViewById(R.id.button_messagesLast);
 
         messages.setOnClickListener(v ->{
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE_LOCATION_PERMISSION);
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                return;
+            }
             DatabaseReference messagesRef = FirebaseDatabase.getInstance().getReference("EmployeeMessages");
 
-            messagesRef.orderByKey().limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.exists()) {
-                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            // Construct a message from all the node's data
-                            String messageInfo = "Date: " + snapshot.child("date").getValue(String.class) + "\n" +
-                                    "Description: " + snapshot.child("description").getValue(String.class) + "\n" +
-                                    "Distance: " + snapshot.child("distance").getValue(String.class) + " meters\n" +
-                                    "Incident: " + snapshot.child("incident").getValue(String.class) + "\n" +
-                                    "Latitude: " + snapshot.child("latitude").getValue(String.class) + "\n" +
-                                    "Longitude: " + snapshot.child("longitude").getValue(String.class) + "\n" +
-                                    "Time: " + snapshot.child("time").getValue(String.class);
+            //todo add comments
+            LocationServices.getFusedLocationProviderClient(this).getLastLocation()
+                    .addOnSuccessListener(this, location -> {
+                        if (location != null) {
+                            messagesRef.orderByKey().addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    if (dataSnapshot.exists()) {
+                                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                            Location messageLocation = new Location("");
+                                            messageLocation.setLatitude(Double.parseDouble(snapshot.child("latitude").getValue(String.class)));
+                                            messageLocation.setLongitude(Double.parseDouble(snapshot.child("longitude").getValue(String.class)));
+                                            double radius = Double.parseDouble(snapshot.child("distance").getValue(String.class));
 
-                            // Show the complete message info in an alert dialog
-                            showAlert("Last Message", messageInfo);
+                                            float distance = location.distanceTo(messageLocation);
+
+                                            if (distance <= radius) {
+                                                // Construct a message from all the node's data
+                                                String messageInfo = "Date: " + snapshot.child("date").getValue(String.class) + "\n" +
+                                                        "Description: " + snapshot.child("description").getValue(String.class) + "\n" +
+                                                        "Distance: " + snapshot.child("distance").getValue(String.class) + " meters\n" +
+                                                        "Incident: " + snapshot.child("incident").getValue(String.class) + "\n" +
+                                                        "Latitude: " + snapshot.child("latitude").getValue(String.class) + "\n" +
+                                                        "Longitude: " + snapshot.child("longitude").getValue(String.class) + "\n" +
+                                                        "Time: " + snapshot.child("time").getValue(String.class);
+
+                                                // Show the complete message info in an alert dialog
+                                                showAlert("Last Message", messageInfo);
+                                            }
+                                        }
+                                    } else {
+                                        showAlert("Messages", "No messages available.");
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                                    showAlert("Database Error", databaseError.getMessage());
+                                }
+                            });
                         }
-                    } else {
-                        showAlert("Messages", "No messages available.");
-                    }
-                }
+                    });
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                    showAlert("Database Error", databaseError.getMessage());
-                }
-            });
         });
 
         /////////////////////// FIRE INCIDENT /////////////////////////
