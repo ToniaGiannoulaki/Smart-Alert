@@ -10,10 +10,10 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.location.LocationServices;
 import com.google.firebase.auth.FirebaseAuth;
@@ -152,173 +152,8 @@ public class LoginUser extends AppCompatActivity {
         if (currentUser != null) {
             DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users").child(currentUser.getUid());
             stat.setOnClickListener(v -> {
-                DatabaseReference messagesRef = FirebaseDatabase.getInstance().getReference("EmployeeMessages");
-
-                messagesRef.orderByKey().addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        userRef.child("EmployeeFireEvent").runTransaction(new Transaction.Handler() {
-                            @NonNull
-                            @Override
-                            public Transaction.Result doTransaction(@NonNull MutableData mutableData) {
-                                mutableData.setValue(0);
-                                return Transaction.success(mutableData);
-                            }
-
-                            @Override
-                            public void onComplete(@androidx.annotation.Nullable DatabaseError error, boolean committed, @androidx.annotation.Nullable DataSnapshot currentData) {
-                                // This method will be called once with the results of the transaction.
-                                if (!committed) {
-                                    Log.d("IncidentUser", "incrementUserEventCount: failed to increment " + "EmployeeFireEvent");
-                                }
-                            }
-                        });
-
-                        userRef.child("EmployeeFloodEvent").runTransaction(new Transaction.Handler() {
-                            @NonNull
-                            @Override
-                            public Transaction.Result doTransaction(@NonNull MutableData mutableData) {
-                                mutableData.setValue(0);
-                                return Transaction.success(mutableData);
-                            }
-
-                            @Override
-                            public void onComplete(@androidx.annotation.Nullable DatabaseError error, boolean committed, @androidx.annotation.Nullable DataSnapshot currentData) {
-                                // This method will be called once with the results of the transaction.
-                                if (!committed) {
-                                    Log.d("IncidentUser", "incrementUserEventCount: failed to increment " + "EmployeeFloodEvent");
-                                }
-                            }
-                        });
-
-                        userRef.child("EmployeeEarthEvent").runTransaction(new Transaction.Handler() {
-                            @NonNull
-                            @Override
-                            public Transaction.Result doTransaction(@NonNull MutableData mutableData) {
-                                mutableData.setValue(0);
-                                return Transaction.success(mutableData);
-                            }
-
-                            @Override
-                            public void onComplete(@androidx.annotation.Nullable DatabaseError error, boolean committed, @androidx.annotation.Nullable DataSnapshot currentData) {
-                                // This method will be called once with the results of the transaction.
-                                if (!committed) {
-                                    Log.d("IncidentUser", "incrementUserEventCount: failed to increment " + "EmployeeEarthEvent");
-                                }
-                            }
-                        });
-
-                        userRef.child("EmployeeElseEvent").runTransaction(new Transaction.Handler() {
-                            @NonNull
-                            @Override
-                            public Transaction.Result doTransaction(@NonNull MutableData mutableData) {
-                                mutableData.setValue(0);
-                                return Transaction.success(mutableData);
-                            }
-
-                            @Override
-                            public void onComplete(@androidx.annotation.Nullable DatabaseError error, boolean committed, @androidx.annotation.Nullable DataSnapshot currentData) {
-                                // This method will be called once with the results of the transaction.
-                                if (!committed) {
-                                    Log.d("IncidentUser", "incrementUserEventCount: failed to increment " + "EmployeeElseEvent");
-                                }
-                            }
-                        });
-
-                        userRef.child("EmployeeDangerEvents").runTransaction(new Transaction.Handler() {
-                            @NonNull
-                            @Override
-                            public Transaction.Result doTransaction(@NonNull MutableData mutableData) {
-                                mutableData.setValue(0);
-                                return Transaction.success(mutableData);
-                            }
-
-                            @Override
-                            public void onComplete(@androidx.annotation.Nullable DatabaseError error, boolean committed, @androidx.annotation.Nullable DataSnapshot currentData) {
-                                // This method will be called once with the results of the transaction.
-                                if (!committed) {
-                                    Log.d("IncidentUser", "incrementUserEventCount: failed to increment " + "EmployeeDangerEvents");
-                                }
-                            }
-                        });
-
-
-                        if (dataSnapshot.exists()) {
-                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-
-                                String incidentType = snapshot.child("incident").getValue(String.class);
-                                String eventType;
-                                if (incidentType.equals("fire")) {
-                                    eventType = "EmployeeFireEvent";
-                                } else if (incidentType.equals("earthquake")) {
-                                    eventType = "EmployeeEarthEvent";
-                                } else if (incidentType.equals("flood")) {
-                                    eventType = "EmployeeFloodEvent";
-                                } else if (incidentType.equals("else")) {
-                                    eventType = "EmployeeElseEvent";
-                                } else eventType = null;
-
-                                if (eventType != null) {
-                                    // Run the transaction on the determined event type
-                                    userRef.child(eventType).runTransaction(new Transaction.Handler() {
-                                        @NonNull
-                                        @Override
-                                        public Transaction.Result doTransaction(@NonNull MutableData mutableData) {
-                                            Integer currentCount = mutableData.getValue(Integer.class);
-                                            if (currentCount == null) {
-                                                mutableData.setValue(1);
-                                            } else {
-                                                mutableData.setValue(currentCount + 1);
-                                            }
-                                            return Transaction.success(mutableData);
-                                        }
-
-                                        @Override
-                                        public void onComplete(@androidx.annotation.Nullable DatabaseError error, boolean committed, @androidx.annotation.Nullable DataSnapshot currentData) {
-                                            // This method will be called once with the results of the transaction.
-                                            if (!committed) {
-                                                Log.d("IncidentUser", "incrementUserEventCount: failed to increment " + eventType);
-                                            }
-                                        }
-                                    });
-
-                                    userRef.child("EmployeeDangerEvents").runTransaction(new Transaction.Handler() {
-                                        @NonNull
-                                        @Override
-                                        public Transaction.Result doTransaction(@NonNull MutableData mutableData) {
-                                            Integer currentCount = mutableData.getValue(Integer.class);
-                                            if (currentCount == null) {
-                                                mutableData.setValue(1);
-                                            } else {
-                                                mutableData.setValue(currentCount + 1);
-                                            }
-                                            return Transaction.success(mutableData);
-                                        }
-
-                                        @Override
-                                        public void onComplete(@androidx.annotation.Nullable DatabaseError error, boolean committed, @androidx.annotation.Nullable DataSnapshot currentData) {
-                                            // This method will be called once with the results of the transaction.
-                                            if (!committed) {
-                                                Log.d("IncidentUser", "incrementUserEventCount: failed to increment " + "dangerEvents");
-                                            }
-                                        }
-                                    });
-                                }
-                            }
-                        } else {
-                            showAlert("Messages", "No messages available.");
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        showAlert("Database Error", databaseError.getMessage());
-                    }
-                });
-                // Create an Intent to start the new activity
-                Intent intent = new Intent(LoginUser.this, Statistics.class);
-                // Start the new activity
-                startActivity(intent);
+                Toast.makeText(this, "Loading...", Toast.LENGTH_SHORT).show();
+                resetFireStats(userRef);
             });
         }
 
@@ -341,6 +176,182 @@ public class LoginUser extends AppCompatActivity {
                     .setNegativeButton(getString(R.string.exit_confirmation_negative), null) // User clicked "No", so dismiss the dialog and do nothing
                     .show(); // Show the AlertDialog
         });
+    }
+
+    private void resetFireStats(DatabaseReference userRef){
+        userRef.child("EmployeeFireEvent").runTransaction(new Transaction.Handler() {
+            @NonNull
+            @Override
+            public Transaction.Result doTransaction(@NonNull MutableData mutableData) {
+                mutableData.setValue(0);
+                return Transaction.success(mutableData);
+            }
+
+            @Override
+            public void onComplete(@androidx.annotation.Nullable DatabaseError error, boolean committed, @androidx.annotation.Nullable DataSnapshot currentData) {
+                // This method will be called once with the results of the transaction.
+                if (committed) {
+                    resetFloodStats(userRef);
+                }
+            }
+        });
+    }
+    private void resetFloodStats(DatabaseReference userRef){
+        userRef.child("EmployeeFloodEvent").runTransaction(new Transaction.Handler() {
+            @NonNull
+            @Override
+            public Transaction.Result doTransaction(@NonNull MutableData mutableData) {
+                mutableData.setValue(0);
+                return Transaction.success(mutableData);
+            }
+
+            @Override
+            public void onComplete(@androidx.annotation.Nullable DatabaseError error, boolean committed, @androidx.annotation.Nullable DataSnapshot currentData) {
+                // This method will be called once with the results of the transaction.
+                if (committed) {
+                    resetEarthStats(userRef);
+                }
+            }
+        });
+    }
+    private void resetEarthStats(DatabaseReference userRef){
+        userRef.child("EmployeeEarthEvent").runTransaction(new Transaction.Handler() {
+            @NonNull
+            @Override
+            public Transaction.Result doTransaction(@NonNull MutableData mutableData) {
+                mutableData.setValue(0);
+                return Transaction.success(mutableData);
+            }
+
+            @Override
+            public void onComplete(@androidx.annotation.Nullable DatabaseError error, boolean committed, @androidx.annotation.Nullable DataSnapshot currentData) {
+                // This method will be called once with the results of the transaction.
+                if (committed) {
+                    resetElseStats(userRef);
+                }
+            }
+        });
+    }
+    private void resetElseStats(DatabaseReference userRef){
+        userRef.child("EmployeeElseEvent").runTransaction(new Transaction.Handler() {
+            @NonNull
+            @Override
+            public Transaction.Result doTransaction(@NonNull MutableData mutableData) {
+                mutableData.setValue(0);
+                return Transaction.success(mutableData);
+            }
+
+            @Override
+            public void onComplete(@androidx.annotation.Nullable DatabaseError error, boolean committed, @androidx.annotation.Nullable DataSnapshot currentData) {
+                // This method will be called once with the results of the transaction.
+                if (committed) {
+                    resetDangerStats(userRef);
+                }
+            }
+        });
+    }
+    private void resetDangerStats(DatabaseReference userRef){
+        userRef.child("EmployeeDangerEvents").runTransaction(new Transaction.Handler() {
+            @NonNull
+            @Override
+            public Transaction.Result doTransaction(@NonNull MutableData mutableData) {
+                mutableData.setValue(0);
+                return Transaction.success(mutableData);
+            }
+
+            @Override
+            public void onComplete(@androidx.annotation.Nullable DatabaseError error, boolean committed, @androidx.annotation.Nullable DataSnapshot currentData) {
+                // This method will be called once with the results of the transaction.
+                if (committed) {
+                    calculateStats(userRef);
+                }
+            }
+        });
+    }
+
+    private void calculateStats(DatabaseReference userRef){
+        DatabaseReference messagesRef = FirebaseDatabase.getInstance().getReference("EmployeeMessages");
+        messagesRef.orderByKey().addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        String incidentType = snapshot.child("incident").getValue(String.class);
+                        String eventType;
+                        if (incidentType.equals("fire")) {
+                            eventType = "EmployeeFireEvent";
+                        } else if (incidentType.equals("earthquake")) {
+                            eventType = "EmployeeEarthEvent";
+                        } else if (incidentType.equals("flood")) {
+                            eventType = "EmployeeFloodEvent";
+                        } else if (incidentType.equals("else")) {
+                            eventType = "EmployeeElseEvent";
+                        } else eventType = null;
+
+                        if (eventType != null) {
+                            // Run the transaction on the determined event type
+                            userRef.child(eventType).runTransaction(new Transaction.Handler() {
+                                @NonNull
+                                @Override
+                                public Transaction.Result doTransaction(@NonNull MutableData mutableData) {
+                                    Integer currentCount = mutableData.getValue(Integer.class);
+                                    if (currentCount == null) {
+                                        mutableData.setValue(1);
+                                    } else {
+                                        mutableData.setValue(currentCount + 1);
+                                    }
+                                    return Transaction.success(mutableData);
+                                }
+
+                                @Override
+                                public void onComplete(@androidx.annotation.Nullable DatabaseError error, boolean committed, @androidx.annotation.Nullable DataSnapshot currentData) {
+                                    // This method will be called once with the results of the transaction.
+                                    if (committed) {
+                                        calculateDangerMessages(userRef);
+                                    }
+                                }
+                            });
+                        }
+                    }
+                } else {
+                    showAlert("Messages", "No messages available.");
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                showAlert("Database Error", databaseError.getMessage());
+            }
+        });
+    }
+
+    private void calculateDangerMessages(DatabaseReference userRef){
+        userRef.child("EmployeeDangerEvents").runTransaction(new Transaction.Handler() {
+            @NonNull
+            @Override
+            public Transaction.Result doTransaction(@NonNull MutableData mutableData) {
+                Integer currentCount = mutableData.getValue(Integer.class);
+                if (currentCount == null) {
+                    mutableData.setValue(1);
+                } else {
+                    mutableData.setValue(currentCount + 1);
+                }
+                return Transaction.success(mutableData);
+            }
+            @Override
+            public void onComplete(@androidx.annotation.Nullable DatabaseError error, boolean committed, @androidx.annotation.Nullable DataSnapshot currentData) {
+                // This method will be called once with the results of the transaction.
+                if (committed) {
+                    showStats();
+                }
+            }
+        });
+    }
+    private void showStats(){
+        // Create an Intent to start the new activity
+        Intent intent = new Intent(LoginUser.this, Statistics.class);
+        // Start the new activity
+        startActivity(intent);
     }
 
     private void showAlert(String title, String message) {
