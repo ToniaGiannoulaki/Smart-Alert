@@ -49,7 +49,7 @@
     <string name="toast_message_success">Το μήνυμα εστάλη επιτυχώς!</string>
     <string name="message_saved_successfully">Το μήνυμα αποθηκεύτηκε επιτυχώς</string>
     <string name="failed_to_save_message">Αποτυχία αποθήκευσης μηνύματος</string>
-    <string name="upload_successful">Επιτυχής αποστολή</string>
+    <string name="upload_successful">Η φωτογραφία ανέβηκε επιτυχώς!</string>
     <string name="permission_denied_redirect">Άρνηση άδειας! Ανακατεύθυνση στη σελίδα εισόδου…</string>
     <string name="exit_confirmation_title">Επιβεβαίωση Εξόδου</string>
     <string name="exit_confirmation_message">Είστε σίγουρος/η ότι θέλετε να αποσυνδεθείτε;</string>
@@ -86,5 +86,8 @@
     <string name="sent_messages">Σταλμένα Μηνύματα:</string>
     <string name="received_messages">Ληφθέντα Μηνύματα:</string>
     <string name="statistics">Στατιστικά</string>
+    <string name="alert_title">Μηνύματα</string>
+    <string name="alert_message">Δεν υπάρχουν διαθέσιμα μηνύματα.</string>
+    <string name="redirecting_message">Ανακατεύθυνση στη σελίδα για δημιουργία νέου μηνύματος…</string>
 
 </resources>

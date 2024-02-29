@@ -142,7 +142,7 @@ public class ComposeMessage extends AppCompatActivity {
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
                             // Notify the user of success
-                            Toast.makeText(ComposeMessage.this, "Message sent successfully!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ComposeMessage.this, getString(R.string.toast_message_success), Toast.LENGTH_SHORT).show();
                             // Remove the ValueEventListener
                             usersMessagesRef.removeEventListener(messageListener);
                         } else {

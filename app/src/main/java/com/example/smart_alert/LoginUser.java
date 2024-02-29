@@ -73,11 +73,11 @@ public class LoginUser extends AppCompatActivity {
                                                         "Time: " + snapshot.child("time").getValue(String.class);
 
                                                 // Show the complete message info in an alert dialog
-                                                showAlert("Last Message", messageInfo);
+                                                showAlert("EMERGENCY!", messageInfo);
                                             }
                                         }
                                     } else {
-                                        showAlert("Messages", "No messages available.");
+                                        showAlert(getString(R.string.alert_title), getString(R.string.alert_message));
                                     }
                                 }
 
@@ -154,9 +154,10 @@ public class LoginUser extends AppCompatActivity {
             stat.setOnClickListener(v -> {
                 Toast.makeText(this, "Loading...", Toast.LENGTH_SHORT).show();
                 resetFireStats(userRef);
+                Intent intent = new Intent(this, Statistics.class);
+                startActivity(intent);
             });
         }
-
 
 
         //////////////////////////// EXIT //////////////////////////////

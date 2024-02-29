@@ -88,5 +88,8 @@
     <string name="sent_messages">Sent Messages:</string>
     <string name="received_messages">Received Messages:</string>
     <string name="statistics">Statistics</string>
+    <string name="alert_title">Messages</string>
+    <string name="alert_message">No messages available.</string>
+    <string name="redirecting_message">Redirecting to compose the message…</string>
 
 </resources>

@@ -58,7 +58,7 @@
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="395dp"
                 android:layout_marginBottom="5dp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -70,12 +70,14 @@
                     android:id="@+id/textView_messages"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="94dp"
-                    android:layout_marginTop="98dp"
-                    android:layout_marginBottom="270dp"
+                    android:layout_marginStart="120dp"
+                    android:layout_marginTop="104dp"
+                    android:layout_marginEnd="99dp"
+                    android:layout_marginBottom="267dp"
                     android:text="@string/no_messages"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 

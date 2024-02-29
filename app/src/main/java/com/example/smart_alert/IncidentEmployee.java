@@ -44,7 +44,7 @@ public class IncidentEmployee extends AppCompatActivity {
 
         accept.setOnClickListener(v ->{
             // Show the toast message
-            Toast.makeText(IncidentEmployee.this, "Redirecting to compose the message...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(IncidentEmployee.this, getString(R.string.redirecting_message), Toast.LENGTH_SHORT).show();
 
             // Create an Intent to start the ComposeMessage activity
             Intent intent = new Intent(IncidentEmployee.this, ComposeMessage.class);
@@ -136,6 +136,7 @@ public class IncidentEmployee extends AppCompatActivity {
                         String longitude = snapshot.child("longitude").getValue(String.class);
                         String date = snapshot.child("date").getValue(String.class);
                         String time = snapshot.child("time").getValue(String.class);
+                        String description = snapshot.child("description").getValue(String.class);
                         // Save the key of the newest message
                         newestMessageKey = snapshot.getKey();
                         // Build the message String
@@ -144,7 +145,8 @@ public class IncidentEmployee extends AppCompatActivity {
                                 .append("Latitude: ").append(latitude).append("\n")
                                 .append("Longitude: ").append(longitude).append("\n")
                                 .append("Date: ").append(date).append("\n")
-                                .append("Time: ").append(time).append("\n\n");
+                                .append("Time: ").append(time).append("\n")
+                                .append("Description: ").append(description).append("\n\n");
 
                         // Display the newest message in TextView
                         message.setText(messagesBuilder.toString());

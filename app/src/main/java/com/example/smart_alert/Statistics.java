@@ -21,8 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class Statistics extends AppCompatActivity {
 
-    private TextView sentMess, sentFire, sentEarth, sentFlood, sentElse;
-    private TextView receivedMess, receivedFire, receivedEarth, receivedFlood, receivedElse;
+    private TextView sentMess, sentFire, sentEarth, sentFlood, sentElse, receivedMess, receivedFire, receivedEarth, receivedFlood, receivedElse;
     private DatabaseReference mDatabase;
     private FirebaseUser currentUser;
     private String userId;
