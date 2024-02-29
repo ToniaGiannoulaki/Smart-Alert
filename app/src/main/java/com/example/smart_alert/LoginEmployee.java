@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.widget.Button;
 
 public class LoginEmployee extends AppCompatActivity {
-
+    Button composeMessage, viewMessage, logOut;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -16,7 +16,7 @@ public class LoginEmployee extends AppCompatActivity {
 
         /////////////////////////////////// VIEW MESSAGES //////////////////////////////////////////
 
-        Button viewMessage = findViewById(R.id.button_viewMessages);
+        viewMessage = findViewById(R.id.button_viewMessages);
 
         viewMessage.setOnClickListener(v ->{
             // Create an Intent to start the new activity
@@ -28,7 +28,7 @@ public class LoginEmployee extends AppCompatActivity {
 
         ////////////////////////////////// COMPOSE MESSAGE /////////////////////////////////////////
 
-        Button composeMessage = findViewById(R.id.button_composeMessage);
+        composeMessage = findViewById(R.id.button_composeMessage);
 
         composeMessage.setOnClickListener(v ->{
             // Create an Intent to start the new activity
@@ -39,7 +39,7 @@ public class LoginEmployee extends AppCompatActivity {
 
         ////////////////////////////////////// LOG OUT /////////////////////////////////////////////
 
-        Button logOut = findViewById(R.id.button_logout);
+        logOut = findViewById(R.id.button_logout);
 
         logOut.setOnClickListener(v ->{
             // Create an AlertDialog to confirm exit

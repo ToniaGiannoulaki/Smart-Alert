@@ -154,8 +154,6 @@ public class LoginUser extends AppCompatActivity {
             stat.setOnClickListener(v -> {
                 Toast.makeText(this, "Loading...", Toast.LENGTH_SHORT).show();
                 resetFireStats(userRef);
-                Intent intent = new Intent(this, Statistics.class);
-                startActivity(intent);
             });
         }
 
@@ -350,7 +348,7 @@ public class LoginUser extends AppCompatActivity {
     }
     private void showStats(){
         // Create an Intent to start the new activity
-        Intent intent = new Intent(LoginUser.this, Statistics.class);
+        Intent intent = new Intent(this, Statistics.class);
         // Start the new activity
         startActivity(intent);
     }
