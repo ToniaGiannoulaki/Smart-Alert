@@ -25,7 +25,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class IncidentEmployee extends AppCompatActivity {
-    TextView message;
+    private TextView message;
     Button accept, delete, deleteAll;
     private String newestMessageKey;
     private StorageReference latestFileRef;

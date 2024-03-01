@@ -39,31 +39,45 @@ public class LoginUser extends AppCompatActivity {
 
         Button messages = findViewById(R.id.button_messagesLast);
 
-        messages.setOnClickListener(v ->{
+        // Set an onClick listener for the 'messages' button
+        messages.setOnClickListener(v -> {
+            // Request location permissions at runtime for accessing the fine location
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE_LOCATION_PERMISSION);
+
+            // Check if location permissions have been granted; if not, exit the listener
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 return;
             }
+
+            // Reference to the 'EmployeeMessages' node in Firebase Database
             DatabaseReference messagesRef = FirebaseDatabase.getInstance().getReference("EmployeeMessages");
 
-            //todo add comments
+            // Fetch the last known location of the device
             LocationServices.getFusedLocationProviderClient(this).getLastLocation()
                     .addOnSuccessListener(this, location -> {
+                        // Check if a location was successfully received
                         if (location != null) {
+                            // Query the Firebase Database for messages, ordered by their keys
                             messagesRef.orderByKey().addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    // Check if there are any messages in the database
                                     if (dataSnapshot.exists()) {
+                                        // Iterate through each message
                                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                            // Create a new Location object for the message's location
                                             Location messageLocation = new Location("");
                                             messageLocation.setLatitude(Double.parseDouble(snapshot.child("latitude").getValue(String.class)));
                                             messageLocation.setLongitude(Double.parseDouble(snapshot.child("longitude").getValue(String.class)));
+                                            // Retrieve the radius within which the message is relevant
                                             double radius = Double.parseDouble(snapshot.child("distance").getValue(String.class));
 
+                                            // Calculate the distance from the current location to the message's location
                                             float distance = location.distanceTo(messageLocation);
 
+                                            // Check if the current location is within the message's relevant radius
                                             if (distance <= radius) {
-                                                // Construct a message from all the node's data
+                                                // Construct a detailed message string from the message's data
                                                 String messageInfo = "Date: " + snapshot.child("date").getValue(String.class) + "\n" +
                                                         "Description: " + snapshot.child("description").getValue(String.class) + "\n" +
                                                         "Distance: " + snapshot.child("distance").getValue(String.class) + " meters\n" +
@@ -72,23 +86,24 @@ public class LoginUser extends AppCompatActivity {
                                                         "Longitude: " + snapshot.child("longitude").getValue(String.class) + "\n" +
                                                         "Time: " + snapshot.child("time").getValue(String.class);
 
-                                                // Show the complete message info in an alert dialog
+                                                // Display the message information in an alert dialog
                                                 showAlert("EMERGENCY!", messageInfo);
                                             }
                                         }
                                     } else {
+                                        // If there are no messages, show a default alert dialog
                                         showAlert(getString(R.string.alert_title), getString(R.string.alert_message));
                                     }
                                 }
 
                                 @Override
                                 public void onCancelled(@NonNull DatabaseError databaseError) {
+                                    // Handle database access errors
                                     showAlert("Database Error", databaseError.getMessage());
                                 }
                             });
                         }
                     });
-
         });
 
         /////////////////////// FIRE INCIDENT /////////////////////////
@@ -177,103 +192,126 @@ public class LoginUser extends AppCompatActivity {
         });
     }
 
+    // Method to reset fire event statistics to 0.
     private void resetFireStats(DatabaseReference userRef){
+        // Access the specific child in the database and run a transaction to reset its value.
         userRef.child("EmployeeFireEvent").runTransaction(new Transaction.Handler() {
             @NonNull
             @Override
             public Transaction.Result doTransaction(@NonNull MutableData mutableData) {
+                // Set the value of the event count to 0.
                 mutableData.setValue(0);
+                // Indicate that the transaction was successful.
                 return Transaction.success(mutableData);
             }
 
             @Override
             public void onComplete(@androidx.annotation.Nullable DatabaseError error, boolean committed, @androidx.annotation.Nullable DataSnapshot currentData) {
-                // This method will be called once with the results of the transaction.
+                // This callback is triggered after the transaction is completed.
                 if (committed) {
+                    // If the transaction is successful, proceed to reset flood event statistics.
                     resetFloodStats(userRef);
                 }
             }
         });
     }
+
+    // Method to reset flood event statistics to 0.
     private void resetFloodStats(DatabaseReference userRef){
+        // Similar structure to resetFireStats. Targets a different event type in the database.
         userRef.child("EmployeeFloodEvent").runTransaction(new Transaction.Handler() {
             @NonNull
             @Override
             public Transaction.Result doTransaction(@NonNull MutableData mutableData) {
+                // Reset the value to 0.
                 mutableData.setValue(0);
                 return Transaction.success(mutableData);
             }
 
             @Override
             public void onComplete(@androidx.annotation.Nullable DatabaseError error, boolean committed, @androidx.annotation.Nullable DataSnapshot currentData) {
-                // This method will be called once with the results of the transaction.
                 if (committed) {
+                    // Proceed to reset earthquake event statistics next.
                     resetEarthStats(userRef);
                 }
             }
         });
     }
+
+    // Method to reset earthquake event statistics to 0.
     private void resetEarthStats(DatabaseReference userRef){
+        // Similar structure to the previous methods. Resets a different event type.
         userRef.child("EmployeeEarthEvent").runTransaction(new Transaction.Handler() {
             @NonNull
             @Override
             public Transaction.Result doTransaction(@NonNull MutableData mutableData) {
+                // Reset the value to 0.
                 mutableData.setValue(0);
                 return Transaction.success(mutableData);
             }
 
             @Override
             public void onComplete(@androidx.annotation.Nullable DatabaseError error, boolean committed, @androidx.annotation.Nullable DataSnapshot currentData) {
-                // This method will be called once with the results of the transaction.
                 if (committed) {
+                    // Next, reset the statistics for the 'else' category of events.
                     resetElseStats(userRef);
                 }
             }
         });
     }
+
+    // Method to reset 'else' category event statistics to 0.
     private void resetElseStats(DatabaseReference userRef){
+        // Follows the same pattern as the previous reset methods. Aims at a generic 'else' event category.
         userRef.child("EmployeeElseEvent").runTransaction(new Transaction.Handler() {
             @NonNull
             @Override
             public Transaction.Result doTransaction(@NonNull MutableData mutableData) {
+                // Reset the value to 0.
                 mutableData.setValue(0);
                 return Transaction.success(mutableData);
             }
 
             @Override
             public void onComplete(@androidx.annotation.Nullable DatabaseError error, boolean committed, @androidx.annotation.Nullable DataSnapshot currentData) {
-                // This method will be called once with the results of the transaction.
                 if (committed) {
+                    // Finally, reset the statistics for all dangerous events.
                     resetDangerStats(userRef);
                 }
             }
         });
     }
+
+    // Resets the statistics for all "danger" events to 0.
     private void resetDangerStats(DatabaseReference userRef){
         userRef.child("EmployeeDangerEvents").runTransaction(new Transaction.Handler() {
             @NonNull
             @Override
             public Transaction.Result doTransaction(@NonNull MutableData mutableData) {
+                // Set the danger event count to 0.
                 mutableData.setValue(0);
-                return Transaction.success(mutableData);
+                return Transaction.success(mutableData); // Mark the transaction as successful.
             }
 
             @Override
             public void onComplete(@androidx.annotation.Nullable DatabaseError error, boolean committed, @androidx.annotation.Nullable DataSnapshot currentData) {
-                // This method will be called once with the results of the transaction.
+                // Called once the transaction completes successfully.
                 if (committed) {
+                    // Proceed to calculate updated stats after resetting.
                     calculateStats(userRef);
                 }
             }
         });
     }
 
+    // Calculates and updates the count of each type of event based on existing messages.
     private void calculateStats(DatabaseReference userRef){
         DatabaseReference messagesRef = FirebaseDatabase.getInstance().getReference("EmployeeMessages");
+        // Retrieve all messages and process them one by one.
         messagesRef.orderByKey().addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
+                // Determine the type of incident from each message.
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         String incidentType = snapshot.child("incident").getValue(String.class);
@@ -295,6 +333,7 @@ public class LoginUser extends AppCompatActivity {
                                 @Override
                                 public Transaction.Result doTransaction(@NonNull MutableData mutableData) {
                                     Integer currentCount = mutableData.getValue(Integer.class);
+                                    // Increment the counter for the determined event type.
                                     if (currentCount == null) {
                                         mutableData.setValue(1);
                                     } else {
@@ -313,10 +352,12 @@ public class LoginUser extends AppCompatActivity {
                             });
                         }
                     }
+                    // Show an alert if no messages are available.
                 } else {
                     showAlert("Messages", "No messages available.");
                 }
             }
+            // Show an alert if there was an error accessing the database.
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 showAlert("Database Error", databaseError.getMessage());
@@ -324,12 +365,15 @@ public class LoginUser extends AppCompatActivity {
         });
     }
 
+    // Increments the count for "danger" messages
     private void calculateDangerMessages(DatabaseReference userRef){
         userRef.child("EmployeeDangerEvents").runTransaction(new Transaction.Handler() {
             @NonNull
             @Override
             public Transaction.Result doTransaction(@NonNull MutableData mutableData) {
+                // Increment the count by 1, or initialize it to 1 if it's null.
                 Integer currentCount = mutableData.getValue(Integer.class);
+                // Called once the transaction completes successfully.
                 if (currentCount == null) {
                     mutableData.setValue(1);
                 } else {
@@ -341,11 +385,13 @@ public class LoginUser extends AppCompatActivity {
             public void onComplete(@androidx.annotation.Nullable DatabaseError error, boolean committed, @androidx.annotation.Nullable DataSnapshot currentData) {
                 // This method will be called once with the results of the transaction.
                 if (committed) {
+                    // Navigate to the statistics display activity.
                     showStats();
                 }
             }
         });
     }
+    // Navigates to the Statistics activity to display the updated counts
     private void showStats(){
         // Create an Intent to start the new activity
         Intent intent = new Intent(this, Statistics.class);
@@ -353,6 +399,7 @@ public class LoginUser extends AppCompatActivity {
         startActivity(intent);
     }
 
+    // Displays an alert dialog with a specified title and message.
     private void showAlert(String title, String message) {
         new AlertDialog.Builder(LoginUser.this)
                 .setTitle(title)

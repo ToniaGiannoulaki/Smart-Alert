@@ -89,5 +89,5 @@
     <string name="alert_title">Μηνύματα</string>
     <string name="alert_message">Δεν υπάρχουν διαθέσιμα μηνύματα.</string>
     <string name="redirecting_message">Ανακατεύθυνση στη σελίδα για δημιουργία νέου μηνύματος…</string>
-
+    <string name="emergency_title">ΕΚΤΑΚΤΟ ΠΕΡΙΣΤΑΤΙΚΟ!</string>
 </resources>
